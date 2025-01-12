@@ -1,0 +1,134 @@
+version: "3" #Obsolete
+
+services:
+
+  db:
+    image: mysql:latest
+
+    environment:
+      MYSQL_DATABASE: 'songsdb'
+      MYSQL_USER: 'localhost'
+      MYSQL_PASSWORD: 'songs'
+      MYSQL_ROOT_PASSWORD: 'songs'
+
+    #container_name: "mysqlcont"
+
+    expose:
+      # Opens port 4306 to be accessible by the backend to insert data into the db
+      - '4306'
+
+    ports:
+      - 4306:3306
+
+    volumes:
+      - ./mysql:/var/lib/mysql #Windows file path for mysql folder
+      #- mysql:/var/lib/mysql #Linux file path for mysql folder (Linux doesn't take the dot in front of the /)
+
+
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+            - node.role == manager
+
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    restart: always #Restarts the container when exiting
+    #container_name: phpmyadmin
+    depends_on:
+      - db
+
+    environment:
+      PMA_HOST: db
+      PMA_PASSWORD: songs
+      MYSQL_DATABASE: songsdb
+      MYSQL_PASSWORD: songs
+      MYSQL_ROOT_PASSWORD: songsRoot
+
+    ports:
+      - 8085:80
+
+    deploy:
+      replicas: 1
+
+
+  apache:
+    image: httpd:latest
+    deploy:
+      replicas: 2
+    
+    #container_name: "apachewscont" #If replicated services can't have a fixed container name since containers must have unique names, in fact docker will rename them after their replica number. For example, there will be: apache-1, apache-2, etc.
+
+    ports:
+      - 8080:80
+
+  
+  ccbackend:
+    image: stefanodesaraca/ccombackend
+
+    #container_name: "ccbackendcont"
+
+    deploy:
+      replicas: 2
+
+    ports:
+      - 8082:80
+
+    #Depends on apache before going online
+    depends_on:
+      - apache
+
+  
+  ccfrontend:
+    image: stefanodesaraca/ccomfrontend
+
+    #container_name: "ccfrontendcont"
+
+    deploy:
+      replicas: 2
+
+    ports:
+      - 8083:80
+
+    depends_on:
+      - apache
+
+
+
+#To uncomment in case of use of this docker-compose.yaml on Linux systems
+#volumes:
+#  mysql:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
