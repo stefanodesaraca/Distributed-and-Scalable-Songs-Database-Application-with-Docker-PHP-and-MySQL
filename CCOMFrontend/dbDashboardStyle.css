@@ -1,0 +1,47 @@
+body{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 10px;
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(115deg, #4A4A4A 10%, #911f21  90%);
+}
+
+.songstable {
+    overflow: auto;
+    width: 100%;
+
+}
+
+.songstable table {
+    border: 1px none #dededf;
+    height: 100%;
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+    border-spacing: 1px;
+    text-align: center;
+}
+
+.songstable caption {
+    caption-side: top;
+    text-align: center;
+}
+
+.songstable th {
+    border: 1px none #dededf;
+    background-color: #eceff1;
+    color: #000000;
+    padding: 5px;
+    font-size: 20px;
+}
+
+.songstable td {
+    border: 1px none #dededf;
+    background-color: #ffffff;
+    color: #000000;
+    padding: 5px;
+    font-size: 20px;
+}
+
