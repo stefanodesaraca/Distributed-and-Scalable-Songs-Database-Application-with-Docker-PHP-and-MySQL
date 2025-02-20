@@ -1,4 +1,2 @@
-*.sql linguist-detectable=true
-*.sql linguist-language=sql
 *.html linguist-vendored
 *.css linguist-vendored
