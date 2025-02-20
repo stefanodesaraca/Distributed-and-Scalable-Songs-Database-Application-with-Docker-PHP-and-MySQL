@@ -1,4 +1,6 @@
 *.html linguist-vendored
 *.css linguist-vendored
+*.yaml linguist-detectable=true
+*.yaml linguist-language=yaml
 *.sql linguist-detectable=true
 *.sql linguist-language=sql
